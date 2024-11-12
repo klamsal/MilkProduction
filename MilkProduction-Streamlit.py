@@ -9,8 +9,8 @@ st.title("Milk Production Analysis")
 uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
 
 if uploaded_file is not None:
-    # Read the CSV file
-    df = pd.read_csv(uploaded_file)
+    # Read the CSV file, making sure to handle headers correctly
+    df = pd.read_csv(uploaded_file, header=0)
     
     # Show dataframe
     st.write("### Data Preview:")
@@ -18,7 +18,7 @@ if uploaded_file is not None:
     
     # Displaying the columns available in the dataset
     st.write("### Dataset Columns:")
-    st.write(df.columns)
+    st.write(df.columns.tolist())
     
     # Check if 'Month' and 'Production' columns exist
     if 'Month' in df.columns and 'Production' in df.columns:
