@@ -16,13 +16,24 @@ if uploaded_file is not None:
     st.write("### Data Preview:")
     st.write(df.head())
     
-    # Plot milk production trends
-    st.write("### Milk Production Trends:")
-    fig, ax = plt.subplots()
-    ax.plot(df['Date'], df['Milk Production'], label='Milk Production')
-    ax.set_xlabel('Date')
-    ax.set_ylabel('Milk Production')
-    ax.legend()
-    st.pyplot(fig)
+    # Displaying the columns available in the dataset
+    st.write("### Dataset Columns:")
+    st.write(df.columns)
+    
+    # Check if 'Month' and 'Production' columns exist
+    if 'Month' in df.columns and 'Production' in df.columns:
+        # Convert 'Month' to datetime for better plotting
+        df['Month'] = pd.to_datetime(df['Month'], errors='coerce')
+        
+        # Plot milk production trends
+        st.write("### Milk Production Trends:")
+        fig, ax = plt.subplots()
+        ax.plot(df['Month'], df['Production'], label='Milk Production')
+        ax.set_xlabel('Month')
+        ax.set_ylabel('Milk Production (Pounds)')
+        ax.legend()
+        st.pyplot(fig)
+    else:
+        st.write("Error: The dataset must contain 'Month' and 'Production' columns.")
 else:
     st.write("Please upload a CSV file to proceed.")
